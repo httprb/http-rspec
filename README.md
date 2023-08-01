@@ -1,4 +1,4 @@
-# ![http.rb RSpec](https://raw.github.com/httprb/http.rb/main/logo.png)
+# ![http.rb](https://raw.github.com/httprb/http.rb/main/logo.png)![RSpec](https://raw.github.com/httprb/http.rb/main/logo-rspec.png)
 
 [![Gem Version][gem-image]][gem-link]
 [![MIT licensed][license-image]][license-link]
@@ -9,27 +9,11 @@
 ## About
 
 HTTP (The Gem! a.k.a. http.rb) is an easy-to-use client library for making requests
-from Ruby. It uses a simple method chaining system for building requests, similar to
-Python's [Requests].
+from Ruby. Behaviour Driven Development for Ruby. Making TDD Productive and Fun.
 
-Under the hood, http.rb uses the [llhttp] parser, a fast HTTP parsing native extension.
-This library isn't just yet another wrapper around `Net::HTTP`. It implements the HTTP
-protocol natively and outsources the parsing to native extensions.
-
-### Why http.rb?
-
-- **Clean API**: http.rb offers an easy-to-use API that should be a
-   breath of fresh air after using something like Net::HTTP.
-
-- **Maturity**: http.rb is one of the most mature Ruby HTTP clients, supporting
-   features like persistent connections and fine-grained timeouts.
-
-- **Performance**: using native parsers and a clean, lightweight implementation,
-   http.rb achieves high performance while implementing HTTP in Ruby instead of C.
-
+This gem adds custom matchers to make it easier to check http requests.
 
 ## Installation
-
 
 Add the gem you you gemfile
 
