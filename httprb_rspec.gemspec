@@ -26,8 +26,6 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency "http", ">= 4.0"
 
-  gem.add_development_dependency "bundler", "~> 2.0"
-
   gem.metadata = {
     "source_code_uri"       => "https://github.com/httprb/httprb_rspec",
     "bug_tracker_uri"       => "https://github.com/httprb/httprb_rspec/issues",

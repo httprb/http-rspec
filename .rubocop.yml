@@ -1,10 +1,22 @@
 inherit_from:
-  - .rubocop_todo.yml
   - .rubocop/layout.yml
   - .rubocop/style.yml
+
+require:
+  - rubocop-rake
+  - rubocop-rspec
 
 AllCops:
   DefaultFormatter: fuubar
   DisplayCopNames: true
   NewCops: enable
   TargetRubyVersion: 3.0
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
+
+RSpec/MultipleExpectations:
+  Max: 10
+RSpec/ExampleLength:
+  Max: 20

@@ -4,16 +4,16 @@ require "spec_helper"
 
 require "http/support/rspec_matchers"
 
-RSpec.describe "rspec matchers" do
-  include HTTP::Support::RspecMatches
+RSpec.describe HTTP::Support::RspecMatchers do
+  include described_class
 
   describe "have_httprb_status" do
     it "raises error if it gets unexpected argument" do
       matcher = have_httprb_status(200)
 
       expect(matcher.matches?("response")).to be(false)
-      expect(matcher.failure_message).to eq("expected a HTTP::Response object, but an instance of String was received")
-      # expect(matcher.description).to eq("respond with 200 ok")
+      expect(matcher.failure_message)
+        .to eq("expected a HTTP::Response object, but an instance of String was received")
     end
 
     it "works with description for 200 ok" do
@@ -46,9 +46,10 @@ RSpec.describe "rspec matchers" do
     end
 
     describe "convert symbol into code" do
-      before :each do
+      before do
         stub_request(:get, "https://nrk.no/").to_return(:status => 299)
       end
+
       let(:response) { HTTP.get("https://nrk.no") }
 
       it "raises for unknown symbol" do
@@ -68,20 +69,6 @@ RSpec.describe "rspec matchers" do
                                          "either a Integer or a symbol")
       end
 
-      it "can take :ok and convert in into 200" do
-        matcher = have_httprb_status(:ok)
-        expect(matcher.matches?(response)).to be(false)
-        expect(matcher.failure_message)
-          .to match(/expected the response to have 200 :ok but/)
-      end
-
-      it "can take :ok and convert in into 200" do
-        matcher = have_httprb_status(:ok)
-        expect(matcher.matches?(response)).to be(false)
-        expect(matcher.failure_message)
-          .to match(/expected the response to have 200 :ok but/)
-      end
-
       it "can take :continue and convert in into 100" do
         matcher = have_httprb_status(:continue)
         expect(matcher.matches?(response)).to be(false)
@@ -96,36 +83,55 @@ RSpec.describe "rspec matchers" do
           .to match(/expected the response to have 101 :switching_protocols but/)
       end
 
+      it "can take :ok and convert in into 200" do
+        matcher = have_httprb_status(:ok)
+        expect(matcher.matches?(response)).to be(false)
+        expect(matcher.failure_message)
+          .to match(/expected the response to have 200 :ok but/)
+      end
+
+      it "can take :created and convert in into 201" do
+        matcher = have_httprb_status(:created)
+        expect(matcher.matches?(response)).to be(false)
+        expect(matcher.failure_message)
+          .to match(/expected the response to have 201 :created but/)
+      end
+
       it "can take :non_authoritative_information and convert in into 203" do
         matcher = have_httprb_status(:non_authoritative_information)
         expect(matcher.matches?(response)).to be(false)
         expect(matcher.failure_message)
           .to match(/expected the response to have 203 :non_authoritative_information but/)
       end
+
       it "can take :multi_status and convert in into 207" do
         matcher = have_httprb_status(:multi_status)
         expect(matcher.matches?(response)).to be(false)
         expect(matcher.failure_message)
           .to match(/expected the response to have 207 :multi_status but/)
       end
+
       it "can take :not_found and convert in into 404" do
         matcher = have_httprb_status(:not_found)
         expect(matcher.matches?(response)).to be(false)
         expect(matcher.failure_message)
           .to match(/expected the response to have 404 :not_found but/)
       end
+
       it "can take :uri_too_long and convert in into 414" do
         matcher = have_httprb_status(:uri_too_long)
         expect(matcher.matches?(response)).to be(false)
         expect(matcher.failure_message)
           .to match(/expected the response to have 414 :uri_too_long but/)
       end
+
       it "can take :internal_server_error and convert in into 500" do
         matcher = have_httprb_status(:internal_server_error)
         expect(matcher.matches?(response)).to be(false)
         expect(matcher.failure_message)
           .to match(/expected the response to have 500 :internal_server_error but/)
       end
+
       it "can take :gateway_timeout and convert in into 504" do
         matcher = have_httprb_status(:gateway_timeout)
         expect(matcher.matches?(response)).to be(false)

@@ -5,10 +5,6 @@ ruby RUBY_VERSION
 
 gem "rake"
 
-# Ruby 3.0 does not ship it anymore.
-# TODO: We should probably refactor specs to avoid need for it.
-gem "webrick"
-
 group :development do
   gem "pry", :require => false
 
@@ -25,7 +21,7 @@ group :test do
 
   gem "backports"
 
-  gem "rubocop", "~> 1.30.0"
+  gem "rubocop", "~> 1.55.0"
   gem "rubocop-performance"
   gem "rubocop-rake"
   gem "rubocop-rspec"

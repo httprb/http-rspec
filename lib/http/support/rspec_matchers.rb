@@ -4,7 +4,7 @@ require "http"
 
 module HTTP
   module Support
-    module RspecMatches
+    module RspecMatchers
       extend RSpec::Matchers::DSL
 
       STATUS_CODE_TO_SYMBOL = HTTP::Response::Status::REASONS
