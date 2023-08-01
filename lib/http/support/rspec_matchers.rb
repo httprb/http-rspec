@@ -8,10 +8,10 @@ module HTTP
       extend RSpec::Matchers::DSL
 
       STATUS_CODE_TO_SYMBOL = HTTP::Response::Status::REASONS
-                              .transform_values do
-        _1.gsub(/[- ]/, "_")
-          .downcase.gsub(/[^a-z_]/, "")
-          .to_sym
+                              .transform_values do |name|
+        name.gsub(/[- ]/, "_")
+            .downcase.gsub(/[^a-z_]/, "")
+            .to_sym
       end
       STATUS_SYMBOL_TO_CODE = STATUS_CODE_TO_SYMBOL.invert
 

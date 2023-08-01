@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = HttprbRspec::VERSION
 
-  gem.required_ruby_version = ">= 2.6"
+  gem.required_ruby_version = ">= 3.0"
 
   gem.add_runtime_dependency "http", ">= 4.0"
 
