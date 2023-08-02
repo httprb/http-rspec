@@ -16,6 +16,9 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
 
+Metrics/MethodLength:
+  Max: 20
+
 RSpec/MultipleExpectations:
   Max: 10
 RSpec/ExampleLength:

@@ -15,17 +15,27 @@ module HTTP
       end
       STATUS_SYMBOL_TO_CODE = STATUS_CODE_TO_SYMBOL.invert
 
-      matcher :have_httprb_status do |_expected| # rubocop:disable Metrics/BlockLength
+      matcher :be_an_http_gem_response do |_expected| # rubocop:disable Metrics/BlockLength
+        chain :with do |options|
+          if options[:status]
+            raise ArgumentError, "status is all ready passed in" if @expected_status
+
+            @expected_status = options[:status]
+          end
+        end
+
         def expected_code
-          case expected
-          when Integer then expected
+          case @expected_status
+          when Integer then @expected_status
           when :success, :successful then 200..299
           when :redirect then 300..399
           when :error then 500..599
           when Symbol
-            STATUS_SYMBOL_TO_CODE.fetch(expected) { raise ArgumentError, "unknown symbol #{expected.inspect}" }
+            STATUS_SYMBOL_TO_CODE.fetch(@expected_status) do
+              raise ArgumentError, "unknown symbol #{@expected_status.inspect}"
+            end
           else
-            raise ArgumentError, "unknown expected value. Should be either a Integer or a symbol"
+            raise ArgumentError, "unknown status value. Should be either a Integer or a symbol"
           end
         end
 
@@ -38,6 +48,9 @@ module HTTP
         def match_response_type = @actual.is_a?(HTTP::Response)
 
         def match_status_code
+          # without @expected_status we dont have anything to compare against
+          return true unless @expected_status
+
           case expected_code
           when Integer
             expected_code == @actual.status.code
@@ -61,7 +74,8 @@ module HTTP
         end
 
         description do
-          "respond with #{expected_type}"
+          "http gem respond"
+            .then { @expected_status ? "#{_1} with #{expected_type}" : _1 }
         end
 
         def invalid_response_type_message
