@@ -32,23 +32,20 @@ module HTTP
         match do |actual|
           @actual = actual
 
-          return false if invalid_response_type_message
+          match_response_type && match_status_code
+        end
 
+        def match_response_type = @actual.is_a?(HTTP::Response)
+
+        def match_status_code
           case expected_code
           when Integer
-            expected_code == actual.status.code
+            expected_code == @actual.status.code
           when Range
-            expected_code.cover?(actual.status.code)
+            expected_code.cover?(@actual.status.code)
           else
             raise "Unknown expected code #{expected_code}. Please report this as an issue"
           end
-        end
-
-        def invalid_response_type_message
-          return if @actual.is_a? HTTP::Response
-
-          "expected a HTTP::Response object, but an instance of " \
-            "#{@actual.class} was received"
         end
 
         def status_code_to_name(code)
@@ -63,22 +60,33 @@ module HTTP
           end
         end
 
-        def actual_type
-          "#{actual.status.code} #{status_code_to_name(actual.status.code).inspect}"
-        end
-
         description do
           "respond with #{expected_type}"
         end
 
+        def invalid_response_type_message
+          "expected a HTTP::Response object, but an instance of " \
+            "#{@actual.class} was received"
+        end
+
+        def actual_type
+          "#{actual.status.code} #{status_code_to_name(actual.status.code).inspect}"
+        end
+
         def failure_message
-          invalid_response_type_message ||
-            "expected the response to have #{expected_type} but it was #{actual_type}"
+          return invalid_response_type_message unless match_response_type
+
+          return "expected the response to have #{expected_type} but it was #{actual_type}" unless match_status_code
+
+          "unknown reason why it fails, please report it"
         end
 
         def failure_message_when_negated
-          invalid_response_type_message ||
-            "expected the response not to have #{expected_type} but it was #{actual_type}"
+          return invalid_response_type_message unless match_response_type
+
+          return "expected the response not to have #{expected_type} but it was #{actual_type}" if match_status_code
+
+          "unknown reason why it fails, please report it"
         end
       end
     end
