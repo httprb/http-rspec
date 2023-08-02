@@ -47,7 +47,7 @@ RSpec.describe Service do
   include HTTP::Support::RspecMatchers
  
   it "makes request" do
-    expect(response).to have_httprb_status(200)
+    expect(response).to be_an_http_gem_response.with(status: 200)
   end
 end
 ```
@@ -66,14 +66,14 @@ Here's some simple examples to get you started:
 ```ruby
   it "has successful response" do 
     response = HTTP.get("www.nrk.no")
-    expect(response).to have_httprb_status(:success) # will match 2xx status code
-    expect(response).to have_httprb_status(:redirect) # will match 3xx status code
-    expect(response).to have_httprb_status(:error) # will match 3xx status code
+    expect(response).to be_an_http_gem_response.with(status: :success) # will match 2xx status code
+    expect(response).to be_an_http_gem_response.with(status: :redirect) # will match 3xx status code
+    expect(response).to be_an_http_gem_response.with(status: :error) # will match 3xx status code
     
-    expect(response).to have_httprb_status(:ok) # require 200 status code
-    expect(response).to have_httprb_status(200) # require 200 status code
-    expect(response).to have_httprb_status(:not_found) # require 404 status code
-    expect(response).to have_httprb_status(404) # require 404 status code
+    expect(response).to be_an_http_gem_response.with(status: :ok) # require 200 status code
+    expect(response).to be_an_http_gem_response.with(status: 200) # require 200 status code
+    expect(response).to be_an_http_gem_response.with(status: :not_found) # require 404 status code
+    expect(response).to be_an_http_gem_response.with(status: 404) # require 404 status code
     
     # you can access HTTP::Support::RspecMatchers::STATUS_CODE_TO_SYMBOL to see the full 
     # mapping between code and symbol
