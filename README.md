@@ -9,40 +9,38 @@
 ## About
 
 HTTP (The Gem! a.k.a. http.rb) is an easy-to-use client library for making requests
-from Ruby. Behaviour Driven Development for Ruby. Making TDD Productive and Fun.
+from Ruby. RSpec is a Behaviour Driven Development spec libary for Ruby. Making TDD 
+Productive and Fun.
 
 This gem adds custom matchers to make it easier to check http requests.
 
 ## Installation
 
-Add the gem you you gemfile
-
+Add the gem to your gemfile with bundler 
 ```bash 
-$ bunlde add httprb_rspec
+$ bunlde add http_rspec
 ```
 
 Inside of your spec helper (default spec_helper.rb):
-
 ```ruby
-require "http/support/rspec_matchers"
+require "http/rspec"
 ```
 
-Now you have to include the matchers you wand for the blocks you want
-
+Now you have to include the matchers you want for the blocks you want
 ```ruby
 # in spec_helper.rb to include matchers everywhere
 RSpec.configure do |config|
-  config.include HTTP::Support::RspecMatches
+  config.include HTTP::Support::RspecMatchers
 end
 
 # in spec_helper.rb to include where the type is service
 RSpec.configure do |config|
-  config.include HTTP::Support::RspecMatches, type: :service
+  config.include HTTP::Support::RspecMatchers, type: :service
 end
 
 # in the individual describe blocks
 RSpec.describe Service do
-  include HTTP::Support::RspecMatches
+  include HTTP::Support::RspecMatchers
  
   it "makes request" do
     expect(response).to have_httprb_status(200)
@@ -55,7 +53,7 @@ end
 Most things are documented here in the readme
 The following API documentation is also available:
 
-- [YARD API documentation](https://www.rubydoc.info/github/httprb/httprb_rspec)
+- [YARD API documentation](https://www.rubydoc.info/github/httprb/http_rspec)
 
 ### Basic Usage
 
@@ -64,16 +62,16 @@ Here's some simple examples to get you started:
 ```ruby
   it "has successful response" do 
     response = HTTP.get("www.nrk.no")
-    expect(response).to have_http_status(:success) # will match 2xx status code
-    expect(response).to have_http_status(:redirect) # will match 3xx status code
-    expect(response).to have_http_status(:error) # will match 3xx status code
+    expect(response).to have_httprb_status(:success) # will match 2xx status code
+    expect(response).to have_httprb_status(:redirect) # will match 3xx status code
+    expect(response).to have_httprb_status(:error) # will match 3xx status code
     
-    expect(response).to have_http_status(:ok) # require 200 status code
-    expect(response).to have_http_status(200) # require 200 status code
-    expect(response).to have_http_status(:not_found) # require 404 status code
-    expect(response).to have_http_status(404) # require 404 status code
+    expect(response).to have_httprb_status(:ok) # require 200 status code
+    expect(response).to have_httprb_status(200) # require 200 status code
+    expect(response).to have_httprb_status(:not_found) # require 404 status code
+    expect(response).to have_httprb_status(404) # require 404 status code
     
-    # you can access HTTP::Support::RspecMatches::STATUS_CODE_TO_SYMBOL to see the full 
+    # you can access HTTP::Support::RspecMatchers::STATUS_CODE_TO_SYMBOL to see the full 
     # mapping between code and symbol
   end
 ```
@@ -101,7 +99,7 @@ exist at the time of a major release, support for that Ruby version may be
 dropped.
 
 
-## Contributing to http.rb
+## Contributing to http.rb rspec
 
 - Fork http.rb on GitHub
 - Make your changes
@@ -120,14 +118,14 @@ See LICENSE.txt for further details.
 [//]: # (badges)
 
 [gem-image]: https://img.shields.io/gem/v/httprb_status?logo=ruby
-[gem-link]: https://rubygems.org/gems/httprb_rspec
+[gem-link]: https://rubygems.org/gems/http_rspec
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
-[license-link]: https://github.com/httprb/httprb_rspec/blob/main/LICENSE.txt
-[build-image]: https://github.com/httprb/httprb_rspec/workflows/CI/badge.svg
-[build-link]: https://github.com/httprb/httprb_rspec/actions/workflows/ci.yml
+[license-link]: https://github.com/httprb/http_rspec/blob/main/LICENSE.txt
+[build-image]: https://github.com/httprb/http_rspec/workflows/CI/badge.svg
+[build-link]: https://github.com/httprb/http_rspec/actions/workflows/ci.yml
 
 [//]: # (links)
 
-[documentation]: https://github.com/httprb/httprb_rspec/wiki
+[documentation]: https://github.com/httprb/http_rspec/wiki
 [requests]: https://docs.python-requests.org/en/latest/
 [llhttp]: https://llhttp.org/
