@@ -9,18 +9,18 @@
 ## About
 
 HTTP (The Gem! a.k.a. http.rb) is an easy-to-use client library for making requests
-from Ruby. RSpec is a Behaviour Driven Development spec libary for Ruby. Making TDD 
+from Ruby. RSpec is a Behaviour Driven Development spec libary for Ruby. Making TDD
 Productive and Fun.
 
 This gem adds custom matchers to make it easier to check http requests.
 
 ## Installation
 
-Add the gem to your gemfile with bundler 
-```bash 
-$ bunlde add http-rspec  --require
+Add the gem to your gemfile with bundler
+```bash
+$ bundle add http-rspec  --require
 ```
-or manually 
+or manually
 ```
 gem "http-rspec", require: false
 ````
@@ -45,7 +45,7 @@ end
 # in the individual describe blocks
 RSpec.describe Service do
   include HTTP::Support::RspecMatchers
- 
+
   it "makes request" do
     expect(response).to be_an_http_gem_response.with(status: 200)
   end
@@ -64,18 +64,18 @@ The following API documentation is also available:
 Here's some simple examples to get you started:
 
 ```ruby
-  it "has successful response" do 
+  it "has successful response" do
     response = HTTP.get("www.nrk.no")
     expect(response).to be_an_http_gem_response.with(status: :success) # will match 2xx status code
     expect(response).to be_an_http_gem_response.with(status: :redirect) # will match 3xx status code
     expect(response).to be_an_http_gem_response.with(status: :error) # will match 3xx status code
-    
+
     expect(response).to be_an_http_gem_response.with(status: :ok) # require 200 status code
     expect(response).to be_an_http_gem_response.with(status: 200) # require 200 status code
     expect(response).to be_an_http_gem_response.with(status: :not_found) # require 404 status code
     expect(response).to be_an_http_gem_response.with(status: 404) # require 404 status code
-    
-    # you can access HTTP::Support::RspecMatchers::STATUS_CODE_TO_SYMBOL to see the full 
+
+    # you can access HTTP::Support::RspecMatchers::STATUS_CODE_TO_SYMBOL to see the full
     # mapping between code and symbol
   end
 ```
